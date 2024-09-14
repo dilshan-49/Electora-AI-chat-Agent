@@ -1,0 +1,34 @@
+.candidate-box {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.candidate-image {
+    width: 70px;
+    height: 70px;
+    border-radius: 20%;
+    border-color:white ;
+    background-size: fill;
+    background-position: center;
+    margin-right: 20px;
+}
+
+.candidate-name {
+    font-size: 20px;
+    font-weight: bold;
+    margin-right: 20px;
+}
+
+.candidate-bar {
+    flex-grow: 1;
+    height: 20px;
+    border-radius: 10px;
+}
+
+.red { background-color: red; }
+.lightgreen { background-color: lightgreen; }
+.darkgreen { background-color: darkgreen; }

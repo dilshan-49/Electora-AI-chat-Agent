@@ -1,6 +1,6 @@
 import os
 import shutil
-from google.cloud import aiplatform
+from google.cloud import aiplatform,storage
 from google.oauth2 import service_account
 import vertexai
 import tempfile
@@ -17,6 +17,9 @@ CHROMA_PATH = './chroma'
 GOOGLE_APPLICATION_CREDENTIALS = './vertexAIconfig.json'
 PROJECT_ID = "electionchatbot-435710"
 LOCATION = 'us-central1'
+BUCKET_NAME = "election-bot"
+
+
 
 # Initialize Vertex AI
 def init_vertex_ai():
@@ -25,7 +28,7 @@ def init_vertex_ai():
     vertexai.init(project=PROJECT_ID, location=LOCATION)
 
 # Load and split PDF documents
-def load_pdf(uploaded_files):
+def load_and_split_pdf(uploaded_files):
     documents = []
     with tempfile.TemporaryDirectory() as temp_dir:
         for uploaded_file in uploaded_files:
@@ -34,10 +37,6 @@ def load_pdf(uploaded_files):
                 temp_file.write(uploaded_file.getbuffer())
             loader = PyPDFLoader(temp_file_path)
             documents.extend(loader.load())
-    return documents
-
-
-def split_text(documents):
     text_splitter = RecursiveCharacterTextSplitter(
         chunk_size=500,
         chunk_overlap=100,
@@ -46,6 +45,7 @@ def split_text(documents):
     )
     chunks = text_splitter.split_documents(documents)
     return chunks
+    
 
 # Save chunks to Chroma vector database
 def save_to_chroma(chunks):
@@ -65,6 +65,38 @@ def save_to_chroma(chunks):
         chunks, vertex_embeddings, persist_directory=CHROMA_PATH
     )
     db.persist()
+    return db
+
+def save_embeddings_to_gcs(db):
+    # Serialize the Chroma object
+    serialized_db = pickle.dumps(db)
+    
+    # Upload to GCS
+    blob = bucket.blob(EMBEDDINGS_BLOB_NAME)
+    blob.upload_from_string(serialized_db)
+    print(f"Embeddings saved to gs://{BUCKET_NAME}/{EMBEDDINGS_BLOB_NAME}")
+
+def load_embeddings_from_gcs():
+    blob = bucket.blob(EMBEDDINGS_BLOB_NAME)
+    if blob.exists():
+        serialized_db = blob.download_as_string()
+        db = pickle.loads(serialized_db)
+        print("Embeddings loaded from GCS")
+        return db
+    else:
+        print("No existing embeddings found in GCS")
+        return None
+
+def update_embeddings(pdf_files):
+    chunks = load_and_split_pdfs(pdf_files)
+    db = create_embeddings(chunks)
+    save_embeddings_to_gcs(db)
+    return db
+
+def get_or_create_embeddings(pdf_files):
+    db = load_embeddings_from_gcs()
+    if db is None:
+        db = update_embeddings(pdf_files)
     return db
 
 # Search in ChromaDB
@@ -91,8 +123,12 @@ def main():
     with col1:
         st.header("Election ChatBot: 🗳️")
     with col2:
-        st.button("Chat with Agent")
-    st.markdown("ASk me anything about the election and I will try to answer it!")
+        if st.button("Chat with Agent"):
+            pass
+        st.markdown("ASk me anything about the election and I will try to answer it!")
+        if st.button("Public Opinion"):
+            pass
+        st.markdown("View Public opinion and Win Prediction")
 
     with st.sidebar:
         st.subheader("Upload PDF Files: 📄")

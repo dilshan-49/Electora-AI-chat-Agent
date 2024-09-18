@@ -14,7 +14,6 @@ from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.vectorstores.chroma import Chroma
 from langchain_google_vertexai import VertexAIEmbeddings
 from langchain.prompts import PromptTemplate
-from firestore_storage import init_firestore, get_pdf_url_from_firestore, download_pdf_from_url,load_pdf_local
 import streamlit as st
 
 # Configurations and paths
@@ -228,9 +227,9 @@ def query_manifiesto():
 def analyze_chunk(chunk, model):
     # Structured prompt for model to generate predictions
     prompt = f"Output should be dictionary data type and give only the dictionary.dont try to give enything else and use leader's full name in dictionary. Analyze the following text and predict support percentages for each leader in the format {{'Leader Name': percentage}}:\n\n{chunk}"
-
+    prompt2=f" Analyze the following text and predict what are the trends in support for each leader and who is likely to win in presidential Election. You may use your information sources too. but prioritize these data :\n\n{chunk}"
     results = model.generate_content([prompt]).text
-    
+    results2= model.generate_content([prompt2]).text
     # Debug: Print the raw result to see what the model is returning
     #st.write("Raw result:", results)
 
@@ -256,7 +255,7 @@ def analyze_chunk(chunk, model):
 
     # Display the final dictionary for verification
     #st.write("Parsed dictionary:", results_dict)
-    return results_dict
+    return results_dict,results2
 
  
 #get Average resoults for each party
@@ -293,18 +292,13 @@ def win_predict():
                 survay_results=[]
 
                 #for survey in surveys:
-                survay_result=analyze_chunk(surveys,predict_model)
+                survay_result,prediction=analyze_chunk(surveys,predict_model)
                 survay_results.append(survay_result) 
                 st.write(survay_result)               
                     #time.sleep(3)
                 
                 final_percentages =avg_results(survay_results)
                 st.success("Analysis Complete! ")
-
-               
-                
-
-                
 
                 st.subheader("Winning Percentages for Each Party")
 
@@ -322,6 +316,8 @@ def win_predict():
 
                 # Display the bar chart
                 st.plotly_chart(fig)
+                with st.container():
+                    st.write(prediction)
 
 
 def main():

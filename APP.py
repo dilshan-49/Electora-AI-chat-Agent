@@ -22,8 +22,7 @@ GOOGLE_APPLICATION_CREDENTIALS = './vertexAIconfig.json'
 PROJECT_ID = "electionchatbot-435710"
 LOCATION = 'us-central1'
 SAVE_PATH= './downloaded_files/'# Path to save the downloaded PDF
-#fire store pdf directory
-collection_name = 'pdfs'  # Firestore collection name
+
 
  
 
@@ -230,8 +229,7 @@ def analyze_chunk(chunk, model):
     prompt2=f" Analyze the following text and predict what are the trends in support for each leader and who is likely to win in presidential Election. You may use your information sources too. but prioritize these data :\n\n{chunk}"
     results = model.generate_content([prompt]).text
     results2= model.generate_content([prompt2]).text
-    # Debug: Print the raw result to see what the model is returning
-    #st.write("Raw result:", results)
+   
 
     # Check if the result is empty
     if not results.strip():
@@ -242,8 +240,6 @@ def analyze_chunk(chunk, model):
     results = results.strip()  # Remove leading/trailing spaces
     results = results.replace("```python", "").replace("```", "").replace("'", '"') # Replace single quotes with double quotes for valid JSON
 
-    # Debug: Print cleaned result
-    #st.write("Cleaned result:", results)
 
     try:
         # Attempt to parse the result as JSON
@@ -253,8 +249,6 @@ def analyze_chunk(chunk, model):
         st.write(f"Error parsing the model output: {e}")
         results_dict = {}
 
-    # Display the final dictionary for verification
-    #st.write("Parsed dictionary:", results_dict)
     return results_dict,results2
 
  

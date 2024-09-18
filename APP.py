@@ -218,7 +218,7 @@ def query_manifiesto():
         with chat_container:
             st.markdown(f'<div class="chat-message user">{query}</div>', unsafe_allow_html=True)
             st.markdown(f'<div class="chat-message bot">{answer}</div>', unsafe_allow_html=True)
-            st.write(results[0][1])
+            
 
 # functionS for predict the winner###################################################################
 
@@ -288,8 +288,8 @@ def win_predict():
                 #for survey in surveys:
                 survay_result,prediction=analyze_chunk(surveys,predict_model)
                 survay_results.append(survay_result) 
-                st.write(survay_result)               
-                    #time.sleep(3)
+                               
+                   
                 
                 final_percentages =avg_results(survay_results)
                 st.success("Analysis Complete! ")

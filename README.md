@@ -48,11 +48,6 @@ Stay updated with the latest headlines by:
 
 ---
 
-## 📜 License
-
-MIT License © 2025 – ELECTORA Developers
-
----
 
 ## 🇱🇰 Built with ❤️ for Sri Lanka
 

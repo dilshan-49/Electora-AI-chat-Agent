@@ -1,18 +1,49 @@
-# AI_Chat_Bot_5.0
-# Election Chatbot 🗳️
+# ELECTORA 🗳️  
+### Sri Lanka's AI-Powered Election Platform
 
-This project implements an AI-powered election chatbot that provides real-time insights and comparisons between political candidates' manifestos during the Sri Lankan presidential election. The application is built using Google Vertex AI, Langchain, and Streamlit.
+ELECTORA is an interactive, AI-driven web application that empowers citizens to explore, analyze, and engage with political data in Sri Lanka. Built using **Streamlit**, **Google Vertex AI**, and **LangChain**, ELECTORA brings together manifesto comparisons, user voting, predictive analytics, and live news summarization—all in one streamlined experience.
 
-To run this Streamlit app, use `streamlit run APP.py` in your terminal.
+---
 
-## Features:
-1. 📜 **Query/Compare Manifiestos**: Upload political candidates' PDFs and query the content to compare their policies.
-2. 🤖 **Chat with Agent**: A chatbot that answers election-related queries using Vertex AI.
-3. 🏆 **Win Prediction**: Analyze survey data to predict potential election outcomes based on the latest trends.
+## 🔧 Features
 
-## Tech Stack:
-- **Google Vertex AI**: For embedding and generating responses.
-- **Langchain**: For document processing and chunking.
-- **ChromaDB**: To store document embeddings for fast retrieval.
-- **Streamlit**: To build an interactive web interface.
+### 📜 Query & Compare Manifestos
+Upload political party manifestos in PDF format and:
+- Ask questions to analyze content.
+- Compare promises across different parties.
+- View structured insights via LLM-powered chat (Gemini).
 
+### 🎤 U-Reporter
+Report local district issues and:
+- Engage in intelligent conversations with an AI agent.
+- Receive detailed analysis on socio-political topics.
+
+### 🏆 Predict Win
+Use AI to predict election outcomes by:
+- Uploading survey PDFs.
+- Generating vote share predictions using Gemini models.
+- Visualizing winning percentages with interactive charts.
+
+### 🗳️ Vote for Your Favorite Party
+Cast votes in a simulation and:
+- See real-time vote distributions.
+- Analyze results via a pie chart.
+- Get an LLM-based breakdown of the predicted winner.
+
+### 📰 Latest Election News
+Stay updated with the latest headlines by:
+- Fetching articles from Firebase.
+- Using Gemini to summarize key political developments.
+- Asking custom questions for tailored news answers.
+
+---
+
+## 💡 Tech Stack
+
+- **Frontend**: Streamlit
+- **AI/LLM**: Google Vertex AI (Gemini)
+- **Backend & Data**: Firebase Realtime Database
+- **Orchestration**: LangChain for prompt handling and chaining
+- **Charts**: Plotly for data visualization
+
+---

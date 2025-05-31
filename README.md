@@ -52,7 +52,9 @@ Stay updated with the latest headlines by:
 ## 🇱🇰 Built with ❤️ for Sri Lanka
 
 ---
-
+## Contributers
+ - Tharusha Dilshan - [Github](https://github.com/dilshan-49)
+   
 ## 🔗 LinkedIn
 
 For more updates, follow [Shehan Perera on LinkedIn](https://www.linkedin.com/posts/shehan-perera-b06697274_ai-machinelearning-nvidia-activity-7257804742121140225-V92Q?utm_source=share&utm_medium=member_desktop&rcm=ACoAAEMFVnYB5UgmCBa8XG-JM1K7HVmE1o67lH8).
